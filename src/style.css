@@ -357,6 +357,7 @@ html, body {
 
     #left-panel {
         width: 100%;
+        padding-bottom: 3rem;
     }
 
     .nav {
