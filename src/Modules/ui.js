@@ -7,18 +7,18 @@ export { UI }
 
 class UI {
 
-                //On Refresh UI//
-    static loadHomepage() {
-        UI.leftUpperPanelButtons()
-        UI.leftLowerPanelButtons()
-        UI.openInboxTasks()
-        UI.displayProjects()
-        UI.displayTasks()
-        
-        
-        
+                    //On Refresh UI//
+                static loadHomepage() {
+                    UI.leftUpperPanelButtons()
+                    UI.leftLowerPanelButtons()
+                    UI.openInboxTasks()
+                    UI.displayProjects()
+                    UI.displayTasks()
+                    UI.openNavButton()
+                }
+
                 //Local Storage Display//
-    }
+
     static displayProjects() {
         const projects = Storage.getProjects();
 
@@ -44,8 +44,6 @@ class UI {
         })
         
     }
-
-
 
   
                   //Dynamic Project Right Panel//
@@ -268,8 +266,9 @@ class UI {
             console.log('clicked')
         })
         taskDiv.firstElementChild.nextElementSibling.addEventListener('click', (e) => {
-
+            console.log(e.target.lastElementChild)
             Storage.removeTask(task)
+            Storage.removeDateTask(task)
             UI.deleteTask(e.target);
         })
         UI.taskDateButtons()
@@ -292,6 +291,7 @@ class UI {
             dates.replaceWith(setDate)
         }       
     }
+    
 
     
                         //Project Task List//
@@ -318,6 +318,7 @@ class UI {
         projectTaskDiv.firstElementChild.nextElementSibling.addEventListener('click', (e) => {
             
             Storage.removeProjectTask(projectTitle, projectTask)
+            Storage.removeProjectTaskDate(projectTask)
             UI.deleteProjectTask(e.target);
         })
         UI.projectTaskDateButtons()
@@ -395,5 +396,15 @@ class UI {
 
         Storage.setDateProjectTask(projectTitle.innerHTML, e.target.parentElement.firstElementChild.innerHTML, setValue)
         setDates.replaceWith(setValue)
+    }
+
+    static openNavButton() {
+        const openNavButton = document.getElementById('button-open-nav')
+        openNavButton.addEventListener('click', UI.toggleNav)
+    }
+
+    static toggleNav() {
+        const nav = document.getElementById('nav')
+        nav.classList.toggle('active')
     }
 }   

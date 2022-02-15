@@ -4,13 +4,14 @@ export { Storage }
 
 class Storage {
 
-    ////////////Project Storage//////////
+                        //Project Storage//
 
     static setProject(project) {
         const projectList = Storage.getProjects();
         projectList.push(project);
         localStorage.setItem('project-name', JSON.stringify(projectList))
     }
+    
     static getProjects() {
         let project;
         if (localStorage.getItem('project-name') === null) {
@@ -20,6 +21,7 @@ class Storage {
         }
         return project 
     }
+
     static removeProject(project) {
         const projectList = Storage.getProjects();
         const filteredProjectList = projectList.filter(item => item !== project)
@@ -28,7 +30,7 @@ class Storage {
 
     
 
-    /////////Tasks Storage////////
+                        //Inbox Tasks Storage//
 
     static setTask(task) {
         const taskList = Storage.getTasks();
@@ -36,6 +38,7 @@ class Storage {
         localStorage.setItem('task-name', JSON.stringify(taskList))
 
     }
+
     static getTasks() {
         let task;
         if (localStorage.getItem('task-name') === null) {
@@ -45,6 +48,7 @@ class Storage {
         }
         return task;
     }
+
     static removeTask(task) {
         const taskList = Storage.getTasks();
         const filteredTaskList = taskList.filter(item => item !== task);
@@ -55,7 +59,7 @@ class Storage {
         const taskList = Storage.getTasks();
         taskList.find((task) => {
             if (task === taskName) {
-                localStorage.setItem(taskName, JSON.stringify(date))
+                localStorage.setItem(taskName, JSON.stringify([date]))
             }
         })   
     }
@@ -70,16 +74,20 @@ class Storage {
         return date;
     }
 
+    static removeDateTask(taskName) {
+        localStorage.getItem(taskName);
+        localStorage.removeItem(taskName)
+    }
 
-    /////////////Project Tasks Storage////////
+                    //Project Tasks Storage//
 
     static setProjectTask(projectName, projectTask) {
-        ///fix project task storage function
         const projectObject = Storage.getProjectTasks(projectName);
         projectObject.push(projectTask);
         localStorage.setItem(projectName, JSON.stringify(projectObject))
         
     }
+
     static getProjectTasks(projectName) {
         let projectTask;
         if (localStorage.getItem(projectName) === null) {
@@ -89,6 +97,7 @@ class Storage {
         }
         return projectTask;
     }
+
     static removeProjectTask(projectName, projectTask) {
         const projectTaskList = Storage.getProjectTasks(projectName);
         const filteredProjectTaskList = projectTaskList.filter(item => item !== projectTask);
@@ -112,5 +121,10 @@ class Storage {
             date = JSON.parse(localStorage.getItem(projectTask))
         }
         return date;
+    }
+
+    static removeProjectTaskDate(projectTask) {
+        localStorage.getItem(projectTask);
+        localStorage.removeItem(projectTask)
     }
 }
